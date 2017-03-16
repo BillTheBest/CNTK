@@ -404,7 +404,7 @@ private:
         // in initState, where memory allocation for nodes are not completed, we only run the algorithm with no workspace
         // or if alloc failed - usually means cuDNN runtime auto-tuner could not allocate workspace.
         // In such case, use static auto-tuner with no workspace.
-        if (algo.autotuningState == AutotuningState::Init || err == CUDNN_STATUS_ALLOC_FAILED)
+        if (algo.autotuningState == AutotuningState::Init || err != CUDNN_STATUS_SUCCESS)
         {
             decltype(CuDnnAlgoT::algo) noMemAlgo;
             CUDNN_CALL(staticFinder(noMemAlgo));
